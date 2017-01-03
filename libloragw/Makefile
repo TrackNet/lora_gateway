@@ -15,7 +15,7 @@ CFLAGS := -O2 -Wall -Wextra -std=c99 -Iinc -I. -fPIC
 OBJDIR = obj
 INCLUDES = $(wildcard inc/*.h)
 
-SPI_WAY=native
+SPI_WAY=ftdi
 
 ### linking options
 
