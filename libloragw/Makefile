@@ -22,7 +22,6 @@ LIBS := -lloragw -lrt -lm
 ### general build targets
 
 all: libloragw.so test_loragw_spi test_loragw_reg test_loragw_hal test_loragw_gps test_loragw_cal
-	CFLAGS+="-O2 -Wall -Wextra -std=c99 -Iinc -I. -fPIC"
 
 clean:
 	rm -f libloragw.so
