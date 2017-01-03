@@ -25,7 +25,7 @@ LGW_INC += $(LGW_PATH)/inc/loragw_hal.h
 
 ### Linking options
 
-LIBS := -lloragw -lrt -lm
+LDLIBS := -lloragw -lrt -lm
 
 ### General build targets
 
@@ -58,6 +58,6 @@ $(OBJDIR)/%.o: src/%.c $(INCLUDES) | $(OBJDIR)
 ### Main program assembly
 
 util_spectral_scan: $(OBJDIR)/util_spectral_scan.o
-	$(CC) -L$(LGW_PATH) $^ $(LIBS) -o $@
+	$(CC) -L$(LGW_PATH) $^ $(LDLIBS) -o $@
 
 ### EOF

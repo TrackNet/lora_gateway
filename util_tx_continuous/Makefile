@@ -32,7 +32,7 @@ LGW_INC += $(LGW_PATH)/inc/loragw_aux.h
 
 ### Linking options
 
-LIBS := -lloragw -lrt -lm
+LDLIBS := -lloragw -lrt -lm
 
 ### General build targets
 
@@ -63,6 +63,6 @@ $(OBJDIR)/$(APP_NAME).o: src/$(APP_NAME).c $(LGW_INC) | $(OBJDIR)
 	$(CC) -c $(CFLAGS) -I$(LGW_PATH)/inc $< -o $@
 
 $(APP_NAME): $(OBJDIR)/$(APP_NAME).o $(LGW_PATH)/libloragw.a
-	$(CC) -L$(LGW_PATH) $< -o $@ $(LIBS)
+	$(CC) -L$(LGW_PATH) $< -o $@ $(LDLIBS)
 
 ### EOF
