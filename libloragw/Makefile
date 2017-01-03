@@ -19,7 +19,7 @@ SPI_WAY=ftdi
 
 ### linking options
 
-LIBS := -lloragw -lrt -lm
+LDLIBS := -lloragw -lrt -lm
 
 ### general build targets
 
@@ -76,18 +76,18 @@ libloragw.so: $(OBJDIR)/loragw_hal.o $(OBJDIR)/loragw_gps.o $(OBJDIR)/loragw_reg
 ### test programs
 
 test_loragw_spi: tst/test_loragw_spi.c libloragw.so
-	$(CC) $(CFLAGS) -L. $< -o $@ $(LIBS)
+	$(CC) $(CFLAGS) -L. $< -o $@ $(LDLIBS)
 
 test_loragw_reg: tst/test_loragw_reg.c libloragw.so
-	$(CC) $(CFLAGS) -L. $< -o $@ $(LIBS)
+	$(CC) $(CFLAGS) -L. $< -o $@ $(LDLIBS)
 
 test_loragw_hal: tst/test_loragw_hal.c libloragw.so
-	$(CC) $(CFLAGS) -L. $< -o $@ $(LIBS)
+	$(CC) $(CFLAGS) -L. $< -o $@ $(LDLIBS)
 
 test_loragw_gps: tst/test_loragw_gps.c libloragw.so
-	$(CC) $(CFLAGS) -L. $< -o $@ $(LIBS)
+	$(CC) $(CFLAGS) -L. $< -o $@ $(LDLIBS)
 
 test_loragw_cal: tst/test_loragw_cal.c libloragw.so src/cal_fw.var
-	$(CC) $(CFLAGS) -L. $< -o $@ $(LIBS)
+	$(CC) $(CFLAGS) -L. $< -o $@ $(LDLIBS)
 
 ### EOF
