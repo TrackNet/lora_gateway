@@ -4,7 +4,7 @@ ARCH ?=
 CROSS_COMPILE ?=
 export
 
-export CFLAGS
+#export CFLAGS
 
 ### general build targets
 
