@@ -15,6 +15,8 @@ CFLAGS := -O2 -Wall -Wextra -std=c99 -Iinc -I. -fPIC
 OBJDIR = obj
 INCLUDES = $(wildcard inc/*.h)
 
+SPI_WAY=native
+
 ### linking options
 
 LIBS := -lloragw -lrt -lm
@@ -60,7 +62,7 @@ $(OBJDIR):
 $(OBJDIR)/%.o: src/%.c $(INCLUDES) inc/config.h | $(OBJDIR)
 	$(CC) -c $(CFLAGS) $< -o $@
 
-$(OBJDIR)/loragw_spi.o: src/loragw_spi.native.c $(INCLUDES) inc/config.h | $(OBJDIR)
+$(OBJDIR)/loragw_spi.o: src/loragw_spi.$(SPI_WAY).c $(INCLUDES) inc/config.h | $(OBJDIR)
 	$(CC) -c $(CFLAGS) $< -o $@
 
 $(OBJDIR)/loragw_hal.o: src/loragw_hal.c $(INCLUDES) src/arb_fw.var src/agc_fw.var src/cal_fw.var inc/config.h | $(OBJDIR)
