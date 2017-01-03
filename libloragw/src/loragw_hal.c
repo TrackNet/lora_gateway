@@ -135,6 +135,7 @@ static uint64_t fsk_sync_word= 0xC194C1; /* default FSK sync word (ALIGNED RIGHT
 
 static bool lorawan_public = false;
 static uint8_t rf_clkout = 0;
+static bool no_gps_capture = false;
 
 static struct lgw_tx_gain_lut_s txgain_lut = {
     .size = 2,
@@ -388,8 +389,9 @@ int lgw_board_setconf(struct lgw_conf_board_s conf) {
     /* set internal config according to parameters */
     lorawan_public = conf.lorawan_public;
     rf_clkout = conf.clksrc;
+    no_gps_capture = conf.no_gps_capture;
 
-    DEBUG_PRINTF("Note: board configuration; lorawan_public:%d, clksrc:%d\n", lorawan_public, rf_clkout);
+    DEBUG_PRINTF("Note: board configuration; lorawan_public:%d, clksrc:%d, no_gps_capture:%d\n", lorawan_public, rf_clkout, no_gps_capture);
 
     return LGW_HAL_SUCCESS;
 }
@@ -1040,8 +1042,8 @@ int lgw_start(void) {
         return LGW_HAL_ERROR;
     }
 
-    /* enable GPS event capture */
-    lgw_reg_w(LGW_GPS_EN, 1);
+    /* Set GPS event capture */
+    lgw_reg_w(LGW_GPS_EN, no_gps_capture ? 0 : 1);
 
     /* */
     if (lbt_is_enabled() == true) {
