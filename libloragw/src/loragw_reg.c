@@ -812,4 +812,47 @@ int lgw_reg_rb(uint16_t register_id, uint8_t *data, uint16_t size) {
     }
 }
 
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+/* Point to a register by name and do a burst verify */
+int lgw_reg_vb(uint16_t register_id, uint8_t *data, uint16_t size) {
+    int spi_stat = LGW_SPI_SUCCESS;
+    struct lgw_reg_s r;
+
+    /* check input parameters */
+    CHECK_NULL(data);
+    if (size == 0) {
+        DEBUG_MSG("ERROR: BURST OF NULL LENGTH\n");
+        return LGW_REG_ERROR;
+    }
+    if (register_id >= LGW_TOTALREGS) {
+        DEBUG_MSG("ERROR: REGISTER NUMBER OUT OF DEFINED RANGE\n");
+        return LGW_REG_ERROR;
+    }
+
+    /* check if SPI is initialised */
+    if ((lgw_spi_target == NULL) || (lgw_regpage < 0)) {
+        DEBUG_MSG("ERROR: CONCENTRATOR UNCONNECTED\n");
+        return LGW_REG_ERROR;
+    }
+
+    /* get register struct from the struct array */
+    r = loregs[register_id];
+
+    /* select proper register page if needed */
+    if ((r.page != -1) && (r.page != lgw_regpage)) {
+        spi_stat += page_switch(r.page);
+    }
+
+    /* do the burst verify */
+    spi_stat += lgw_spi_vb(lgw_spi_target, lgw_spi_mux_mode, LGW_SPI_MUX_TARGET_SX1301, r.addr, data, size);
+
+    if (spi_stat != LGW_SPI_SUCCESS) {
+        DEBUG_MSG("ERROR: SPI ERROR DURING REGISTER BURST VERIFY\n");
+        return LGW_REG_ERROR;
+    } else {
+        return LGW_REG_SUCCESS;
+    }
+}
+
 /* --- EOF ------------------------------------------------------------------ */

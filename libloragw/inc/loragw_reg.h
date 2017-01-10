@@ -455,6 +455,15 @@ int lgw_reg_wb(uint16_t register_id, uint8_t *data, uint16_t size);
 */
 int lgw_reg_rb(uint16_t register_id, uint8_t *data, uint16_t size);
 
+/**
+@brief LoRa concentrator register burst verify
+@param register_id register number in the data structure describing registers
+@param data pointer to byte array that will be compared to data read from the LoRa concentrator
+@param size size of the transfer, in byte(s)
+@return status of register operation (LGW_REG_SUCCESS/LGW_REG_ERROR)
+*/
+int lgw_reg_vb(uint16_t register_id, uint8_t *data, uint16_t size);
+
 
 #endif
 

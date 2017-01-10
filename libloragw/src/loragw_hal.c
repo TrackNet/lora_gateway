@@ -176,7 +176,6 @@ int32_t lgw_bw_getval(int x);
 int load_firmware(uint8_t target, uint8_t *firmware, uint16_t size) {
     int reg_rst;
     int reg_sel;
-    uint8_t fw_check[8192];
     int32_t dummy;
 
     /* check parameters */
@@ -212,8 +211,7 @@ int load_firmware(uint8_t target, uint8_t *firmware, uint16_t size) {
 
     /* Read back firmware code for check */
     lgw_reg_r( LGW_MCU_PROM_DATA, &dummy ); /* bug workaround */
-    lgw_reg_rb( LGW_MCU_PROM_DATA, fw_check, size );
-    if (memcmp(firmware, fw_check, size) != 0) {
+    if (lgw_reg_vb( LGW_MCU_PROM_DATA, firmware, size ) != LGW_REG_SUCCESS) {
         printf ("ERROR: Failed to load fw %d\n", (int)target);
         return -1;
     }

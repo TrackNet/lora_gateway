@@ -100,6 +100,16 @@ int lgw_spi_wb(void *spi_target, uint8_t spi_mux_mode, uint8_t spi_mux_target, u
 */
 int lgw_spi_rb(void *spi_target, uint8_t spi_mux_mode, uint8_t spi_mux_target, uint8_t address, uint8_t *data, uint16_t size);
 
+/**
+@brief LoRa concentrator SPI burst (multiple-byte) verify
+@param spi_target generic pointer to SPI target (implementation dependant)
+@param address 7-bit register address
+@param data pointer to byte array that will be compared to data read from the LoRa concentrator
+@param size size of the transfer, in byte(s)
+@return status of register operation (LGW_SPI_SUCCESS/LGW_SPI_ERROR)
+*/
+int lgw_spi_vb(void *spi_target, uint8_t spi_mux_mode, uint8_t spi_mux_target, uint8_t address, uint8_t *data, uint16_t size);
+
 #endif
 
 /* --- EOF ------------------------------------------------------------------ */

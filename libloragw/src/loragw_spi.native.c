@@ -382,4 +382,21 @@ int lgw_spi_rb(void *spi_target, uint8_t spi_mux_mode, uint8_t spi_mux_target, u
     }
 }
 
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+/* Burst (multiple-byte) verify (read and compare) */
+int lgw_spi_vb(void *spi_target, uint8_t spi_mux_mode, uint8_t spi_mux_target, uint8_t address, uint8_t *data, uint16_t size) {
+    uint8_t check_buf[size];
+
+    if (lgw_spi_rb(spi_target, spi_mux_mode, spi_mux_target, address, data, size) == LGW_SPI_SUCCESS) {
+	if (memcmp(data, check_buf, size) == 0) {
+	    DEBUG_MSG("Note: SPI burst verify success\n");
+	    return LGW_SPI_SUCCESS;
+	} else {
+	    DEBUG_MSG("ERROR: SPI BURST VERIFY FAILURE\n");
+	}
+    }
+    return LGW_SPI_ERROR;
+}
+
 /* --- EOF ------------------------------------------------------------------ */
