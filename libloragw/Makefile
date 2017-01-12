@@ -25,6 +25,10 @@ LDLIBS := -lloragw -lrt -lm
 
 all: libloragw.so test_loragw_spi test_loragw_reg test_loragw_hal test_loragw_gps test_loragw_cal
 
+install:
+	install -D -m644 libloragw.so /usr/lib/libloragw.so
+	install -D -m644 inc/loragw_hal.h /usr/include/loragw_hal.h
+
 clean:
 	rm -f libloragw.so
 	rm -f test_loragw_*
